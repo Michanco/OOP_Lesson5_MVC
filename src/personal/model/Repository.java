@@ -7,4 +7,5 @@ public interface Repository {
     String CreateUser(User user);
 
     User updateUser(User user);
+    void deleteUser(User user);
 }

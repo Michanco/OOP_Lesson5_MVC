@@ -34,4 +34,8 @@ public class UserController {
         return repository.updateUser(user);
     }
 
+    public void deleteUser(User user){
+        repository.deleteUser(user);
+    }
+
 }

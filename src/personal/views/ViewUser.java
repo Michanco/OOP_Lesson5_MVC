@@ -36,11 +36,19 @@ public class ViewUser {
                     case UPDATE:
                         updateUser();
                         break;
+                    case DELETE:
+                        deleteUser();
+                        break;
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());;
             }
         }
+    }
+
+    private void deleteUser() throws Exception {
+        User user = getUser();
+        userController.deleteUser(user);
     }
 
     private void updateUser() throws Exception{
