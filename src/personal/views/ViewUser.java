@@ -2,6 +2,7 @@ package personal.views;
 
 import personal.controllers.UserController;
 import personal.model.User;
+import personal.views.validator.Namesvalidator;
 
 import java.util.List;
 import java.util.Scanner;
@@ -32,11 +33,22 @@ public class ViewUser {
                     case LIST:
                         readList();
                         break;
+                    case UPDATE:
+                        updateUser();
+                        break;
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());;
             }
         }
+    }
+
+    private void updateUser() throws Exception{
+        User user = getUser();
+        User updatedUser = newUser();
+        updatedUser.setId(user.getId());
+        User savedUser = userController.updateUser(updatedUser);
+        System.out.println(savedUser);
     }
 
     private void readList() {
@@ -47,16 +59,30 @@ public class ViewUser {
     }
 
     private void readUser() throws Exception {
-        String id = prompt("Идентификатор пользователя: ");
-        User user = userController.readUser(id);
+        User user = getUser();
         System.out.println(user);
     }
 
-    private void createUser() {
+    private User getUser() throws Exception {
+        String id = prompt("Идентификатор пользователя: ");
+        User user = userController.readUser(id);
+        System.out.println(user);
+        return user;
+    }
+
+    private void createUser() throws Exception {
+        User user = newUser();
+        userController.saveUser(user);
+    }
+
+    private User newUser() throws Exception {
         String firstName = prompt("Имя: ");
+        new Namesvalidator(firstName).validate();
         String lastName = prompt("Фамилия: ");
+        new Namesvalidator(lastName).validate();
         String phone = prompt("Номер телефона: ");
-        userController.saveUser(new User(firstName, lastName, phone));
+        User user = new User(firstName, lastName, phone);
+        return user;
     }
 
     private String prompt(String message) {
