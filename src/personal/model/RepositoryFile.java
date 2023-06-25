@@ -68,8 +68,10 @@ public class RepositoryFile implements Repository {
         for (User currentUser: users) {
             if (currentUser.getId().equals(user.getId())) {
                 users.remove(currentUser);
+                break;
             }
         }
+        System.out.println("User not found");
         fileOperation.saveAllLines(mapToString(users));
     }
 }
